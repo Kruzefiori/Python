@@ -35,7 +35,7 @@ def quick_sort(array, start, end):
     quick_sort(array, start, p-1)
     quick_sort(array, p+1, end)
 array = []#array onde os 5000 valores vão ser inseridos 
-while len(array) <5000:#While para gerar 5000 valores aleatórios
+while len(array) <25000:#While para gerar 5000 valores aleatórios
     valor = random.randrange(1 , 20000)
     array.append(valor)#coloca o valor no array
 array_copia = array #cria uma cópia do Array para usar o mesmo conjunto para medição do tempo
@@ -59,7 +59,7 @@ temp_bubble = fim - inicio
 #mostra qual foi a melhor
 if temp_quick < temp_bubble:
     dif = float(temp_quick - temp_bubble)
-    print('O QuickSort foi '+ str(dif) + ' ms mais rápido!')
+    print('O QuickSort foi '+ str({dif:.2}) + ' ms mais rápido!')
 else:
     dif = float(temp_bubble - temp_quick )
-    print('O BubbleSort foi '+ str(dif) + ' ms mais rápido!')
+    print('O BubbleSort foi '+ str({dif:.2}) + ' ms mais rápido!')
