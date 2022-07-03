@@ -9,7 +9,7 @@ class Estudante:
 
     def getNroMatric(self):
         return self.__nroMatric
-
+    
     def getNome(self):
         return self.__nome
 
@@ -60,15 +60,33 @@ class LimiteMostraEstudantes():
       
 class CtrlEstudante():       
     def __init__(self):
-        self.listaEstudantes = []
+        self.listaEstudantes = [
+            Estudante('1001', 'Joao Santos'),
+            Estudante('1002', 'Marina Cintra'),
+            Estudante('1003', 'Felipe Reis'),
+            Estudante('1004', 'Ana Souza')
+        ]
+
+    def getEstudante(self, nroMatric):
+        estRet = None
+        for est in self.listaEstudantes:
+            if est.getNroMatric() == nroMatric:
+                estRet = est
+        return estRet
+
+    def getListaNroMatric(self):
+        listaNro = []
+        for est in self.listaEstudantes:
+            listaNro.append(est.getNroMatric())
+        return listaNro
 
     def insereEstudantes(self):
-        self.limiteIns = LimiteInsereEstudantes(self)
+        self.limiteIns = LimiteInsereEstudantes(self) 
 
     def mostraEstudantes(self):
         str = 'Nro Matric. -- Nome\n'
         for est in self.listaEstudantes:
-            str += est.getNroMatric() + ' -- ' + est.getNome() + '\n'
+            str += est.getNroMatric() + ' -- ' + est.getNome() + '\n'       
         self.limiteLista = LimiteMostraEstudantes(str)
 
     def enterHandler(self, event):
@@ -85,3 +103,4 @@ class CtrlEstudante():
 
     def fechaHandler(self, event):
         self.limiteIns.destroy()
+    
