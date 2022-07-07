@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 
 class Estudante:
 
@@ -12,6 +12,9 @@ class Estudante:
     
     def getNome(self):
         return self.__nome
+    def getDados(self):
+        return 'Aluno: ' + self.getNome() 
+
 
 class LimiteInsereEstudantes(tk.Toplevel):
     def __init__(self, controle):
@@ -50,6 +53,7 @@ class LimiteInsereEstudantes(tk.Toplevel):
         self.buttonFecha.pack(side="left")
         self.buttonFecha.bind("<Button>", controle.fechaHandler)
 
+
     def mostraJanela(self, titulo, msg):
         messagebox.showinfo(titulo, msg)
 
@@ -67,7 +71,10 @@ class CtrlEstudante():
             Estudante('1004', 'Ana Souza')
         ]
 
-    def buscaAluno(self, nroMatric):
+    def mostraJanela(self, titulo, msg):
+        messagebox.showinfo(titulo, msg)
+
+    def getEstudante(self, nroMatric):
         estRet = None
         for est in self.listaEstudantes:
             if est.getNroMatric() == nroMatric:
@@ -88,6 +95,17 @@ class CtrlEstudante():
         for est in self.listaEstudantes:
             str += est.getNroMatric() + ' -- ' + est.getNome() + '\n'       
         self.limiteLista = LimiteMostraEstudantes(str)
+    
+    def consultaEstudantes(self):
+        matricula = simpledialog.askstring('Codigo ', 'Numero de matricula: ')
+        cont = 0
+        for est in self.listaEstudantes:
+            if est.getNroMatric() == matricula:
+                self.mostraJanela('Cliente: ', est.getDados())
+                cont+= 1
+        if cont == 0:
+           self.mostraJanela('erro', 'Estudante nao Cadastrado')
+
 
     def enterHandler(self, event):
         nroMatric = self.limiteIns.inputNro.get()

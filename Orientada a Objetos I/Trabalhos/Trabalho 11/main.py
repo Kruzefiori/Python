@@ -12,9 +12,18 @@ class LimitePrincipal():
         self.menubar = tk.Menu(self.root)        
         self.estudanteMenu = tk.Menu(self.menubar)
         self.discipMenu = tk.Menu(self.menubar)
-        self.turmaMenu = tk.Menu(self.menubar)
-        self.consultaMenu = tk.Menu(self.menubar)   
+        self.turmaMenu = tk.Menu(self.menubar)   
+        self.buscaMenu = tk.Menu(self.menubar) 
 
+        self.buscaMenu.add_command(label="Consulta Estudadante", \
+                    command=self.controle.consultaEstudantes)
+        self.buscaMenu.add_command(label="Consulta Turma", \
+                    command=self.controle.consultaTurmas)
+        self.buscaMenu.add_command(label="Consulta Disciplinas", \
+                    command=self.controle.consultaDisciplinas)
+        self.menubar.add_cascade(label="Busca", \
+                    menu=self.buscaMenu),
+         
         self.estudanteMenu.add_command(label="Insere", \
                     command=self.controle.insereEstudantes)
         self.estudanteMenu.add_command(label="Mostra", \
@@ -25,7 +34,7 @@ class LimitePrincipal():
         self.discipMenu.add_command(label="Insere", \
                     command=self.controle.insereDisciplinas)
         self.discipMenu.add_command(label="Mostra", \
-                    command=self.controle.mostraDisciplinas)        
+                    command=self.controle.mostraDisciplinas)      
         self.menubar.add_cascade(label="Disciplina", \
                     menu=self.discipMenu)
 
@@ -35,15 +44,6 @@ class LimitePrincipal():
                     command=self.controle.mostraTurmas)                     
         self.menubar.add_cascade(label="Turma", \
                     menu=self.turmaMenu)        
-
-        self.consultaMenu.add_command(label="Busca Aluno", \
-                    command=self.controle.buscaAluno)
-        self.consultaMenu.add_command(label="Busca Disciplina", \
-                    command=self.controle.buscaDisciplina)                
-        self.consultaMenu.add_command(label="Busca Turma", \
-                    command=self.controle.buscaTurma)                          
-        self.menubar.add_cascade(label="Buscar", \
-                    menu=self.consultaMenu)        
 
         self.root.config(menu=self.menubar)
 
@@ -61,33 +61,33 @@ class ControlePrincipal():
         self.root.title("Exemplo MVC")
         # Inicia o mainloop
         self.root.mainloop()
-
-    def buscaAluno(self):
-        self.ctrlEstudante.buscaAluno()
-
-    def buscaDisciplina(self):
-        self.ctrlDisciplina.buscaDisciplina()
-
-    def buscaTurma(self):
-        self.ctrlTurma.buscaTurma()
-    
+       
     def insereEstudantes(self):
         self.ctrlEstudante.insereEstudantes()
 
     def mostraEstudantes(self):
         self.ctrlEstudante.mostraEstudantes()
+    
+    def consultaEstudantes(self):
+        self.ctrlEstudante.consultaEstudantes()
 
     def insereDisciplinas(self):
         self.ctrlDisciplina.insereDisciplinas()
 
     def mostraDisciplinas(self):
         self.ctrlDisciplina.mostraDisciplinas()
+    
+    def consultaDisciplinas(self):
+        self.ctrlDisciplina.consultaDisciplinas()
 
     def insereTurmas(self):
         self.ctrlTurma.insereTurmas()
 
     def mostraTurmas(self):
         self.ctrlTurma.mostraTurmas()
+
+    def consultaTurmas(self):
+        self.ctrlTurma.consultaTurmas()
 
 if __name__ == '__main__':
     c = ControlePrincipal()

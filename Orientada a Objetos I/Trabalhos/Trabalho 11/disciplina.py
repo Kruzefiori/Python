@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 
 class Disciplina:
 
@@ -12,6 +12,10 @@ class Disciplina:
     
     def getNome(self):
         return self.__nome
+   
+    def getDados(self):
+        return 'Disciplina: ' + self.getNome()
+
 
 class LimiteInsereDisciplinas(tk.Toplevel):
     def __init__(self, controle):
@@ -66,6 +70,9 @@ class CtrlDisciplina():
             Disciplina('COM111', 'Estruturas de Dados')
         ]
 
+    def mostraJanela(self, titulo, msg):
+        messagebox.showinfo(titulo, msg)
+
     def getListaDisciplinas(self):
         return self.listaDisciplinas
 
@@ -90,6 +97,16 @@ class CtrlDisciplina():
         for disc in self.listaDisciplinas:
             str += disc.getCodigo() + ' -- ' + disc.getNome() + '\n'
         self.limiteLista = LimiteMostraDisciplinas(str)
+
+    def consultaDisciplinas(self):
+        disciplina = simpledialog.askstring('Codigo ', 'Numero de matricula: ')
+        cont = 0
+        for disc in self.listaDisciplinas:
+            if disc.getCodigo() == disciplina:
+                self.mostraJanela('Disciplina: ', disc.getDados())
+                cont+= 1
+        if cont == 0:
+           self.mostraJanela('erro', 'Disciplina nao Cadastrada')
 
     def enterHandler(self, event):
         nroMatric = self.limiteIns.inputCodigo.get()

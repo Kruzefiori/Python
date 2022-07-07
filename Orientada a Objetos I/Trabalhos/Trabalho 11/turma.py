@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 import estudante as est 
 import disciplina as disc
 
@@ -19,6 +19,9 @@ class Turma:
 
     def getEstudantes(self):
         return self.__estudantes
+    
+    def getDados(self):
+        return 'Disciplina: ' + self.getDisciplina().getCodigo() + ', Estudantes: ' + self.getEstudantes() + ', Codigo: '+ self.getCodigo()
 
 
 class LimiteInsereTurma(tk.Toplevel):
@@ -63,10 +66,10 @@ class LimiteInsereTurma(tk.Toplevel):
 
         self.buttonCria = tk.Button(self.frameButton ,text="Cria Turma")           
         self.buttonCria.pack(side="left")
-        self.buttonCria.bind("<Button>", controle.criaTurma)    
+        self.buttonCria.bind("<Button>", controle.criaTurma)   
 
     def mostraJanela(self, titulo, msg):
-        messagebox.showinfo(titulo, msg)            
+        messagebox.showinfo(titulo, msg) 
 
 class LimiteMostraTurmas():
     def __init__(self, str):
@@ -76,6 +79,10 @@ class CtrlTurma():
     def __init__(self, controlePrincipal):
         self.ctrlPrincipal = controlePrincipal
         self.listaTurmas = []
+    
+    def mostraJanela(self, titulo, msg):
+        messagebox.showinfo(titulo, msg)   
+
 
     def insereTurmas(self):        
         self.listaAlunosTurma = []
@@ -111,3 +118,21 @@ class CtrlTurma():
 
         self.limiteLista = LimiteMostraTurmas(str)
     
+    def consultaTurmas(self):
+        cont=0
+        cont1=0
+        str = ''
+        codigo = simpledialog.askstring('Codigo ', 'Codigo da Disciplina ')
+        for disciplina in disc.CtrlDisciplina.getListaDisciplinas(disc.CtrlDisciplina()):
+            if disciplina.getCodigo() == codigo:
+                str = disciplina.getNome()+ '\n'
+                cont+=1
+                for turma in self.listaTurmas:
+                    if turma.getDisciplina().getNome() == disciplina.getNome() :
+                        cont1+=1
+                        str += f'Turma: {turma.getCodigo()} \n'     
+                self.mostraJanela('Turma: ',str ) 
+        if cont ==0:
+            self.mostraJanela('Turma: ', f'Essa disciplina nao esta cadastrada' ) 
+        elif  cont1 ==0:
+            self.mostraJanela('Turma: ', f'Nao existe turma cadastrada nessa disciplina' )
