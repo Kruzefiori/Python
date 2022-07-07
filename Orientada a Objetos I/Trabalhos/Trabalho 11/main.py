@@ -15,7 +15,7 @@ class LimitePrincipal():
         self.turmaMenu = tk.Menu(self.menubar)   
         self.buscaMenu = tk.Menu(self.menubar) 
 
-        self.buscaMenu.add_command(label="Consulta Estudadante", \
+        self.buscaMenu.add_command(label="Consulta Estudante", \
                     command=self.controle.consultaEstudantes)
         self.buscaMenu.add_command(label="Consulta Turma", \
                     command=self.controle.consultaTurmas)
