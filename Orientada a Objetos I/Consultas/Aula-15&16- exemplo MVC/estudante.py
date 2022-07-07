@@ -67,7 +67,7 @@ class CtrlEstudante():
             Estudante('1004', 'Ana Souza')
         ]
 
-    def getEstudante(self, nroMatric):
+    def buscaAluno(self, nroMatric):
         estRet = None
         for est in self.listaEstudantes:
             if est.getNroMatric() == nroMatric:

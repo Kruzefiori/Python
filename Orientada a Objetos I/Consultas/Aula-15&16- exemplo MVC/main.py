@@ -71,7 +71,6 @@ class ControlePrincipal():
     def buscaTurma(self):
         self.ctrlTurma.buscaTurma()
     
-       
     def insereEstudantes(self):
         self.ctrlEstudante.insereEstudantes()
 
