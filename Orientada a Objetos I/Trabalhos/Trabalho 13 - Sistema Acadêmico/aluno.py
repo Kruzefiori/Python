@@ -149,12 +149,11 @@ class CtrlAluno():
                             if disci.getNome() == disciplina.getNome():
                                 cod = disciplina.getCod()
                                 carga = disciplina.getCarga()
-                                curso = disciplina.getCurso()
                                 nota = disci.getNota()
-                                infoDisci += '\n' + "Disciplina: " + disci.getNome() + "\n" + "Código: " + cod + "\n" + "Carga Horária: " + carga + "\n" + "Nota: " + nota + "\n-----------------------------"
+                                infoDisci += '\n' + "Disciplina: " + disci.getNome() + "\n" + "Código: " + cod + "\n" + "Nota: " + nota + "\n-----------------------------"
                             info += infoDisci
                         cargaTot += int(carga)
-                    return messagebox.showinfo('Relatório', 'Histórico: ' + str(info) + "\n" + "Carga Horária Total: " + str(cargaTot) + " horas")
+                    return messagebox.showinfo('Info', 'Histórico: ' + str(info))
             except NotExist:
                 messagebox.showerror("Não encontrado", " A matrícula não pertence a nenhum aluno!")
                 ask = messagebox.askyesno('Continuar?', "Deseja tentar novamente?")
@@ -163,7 +162,7 @@ class CtrlAluno():
         numMat = self.limiteIns.inputNro.get()
         aluno = Aluno(nome, numMat)
         self.listaAlunos.append(aluno)
-        messagebox.showinfo("Feito!", "Aluno incluido com sucesso!")
+        messagebox.showinfo("OK", "Aluno incluido!")
         self.clearHandler(event)
     def insereHandler(self, event):
         numAluno = simpledialog.askstring("Aluno", "Digite a matrícula do aluno: ")

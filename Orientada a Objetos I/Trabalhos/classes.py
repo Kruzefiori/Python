@@ -118,7 +118,7 @@ class Venda:
     def getAnoVenda(self):
         return self.__anoVenda
     
-    def getValor(self):
+    def getVal(self):
         return self.__valor
 
 class Vendedor(ABC):
@@ -169,7 +169,7 @@ class Contratado(Vendedor):
         comissao = 0
         for each in vendas:
             if pMes == each.getMesVenda() and pAno == each.getAnoVenda():
-                comissao += each.getValor()/100
+                comissao += each.getVal()/100
         rendaTotal = self.__salFixo + comissao
         return rendaTotal
 
@@ -194,7 +194,7 @@ class Comissionado(Vendedor):
         rendaTot = 0
         for each in vendas:
             if pMes == each.getMesVenda() and pAno == each.getAnoVenda():
-                rendaTot += (each.getValor()/100) * self.getComissao()
+                rendaTot += (each.getVal()/100) * self.getComissao()
         return rendaTot
 
 
@@ -339,11 +339,11 @@ class Conta:
         saldoRetorno = self.getLimite()
         for each in tra:
             if type(each).__name__ == 'Deposito':
-                saldoRetorno = saldoRetorno + each.getValor()
+                saldoRetorno = saldoRetorno + each.getVal()
             if type(each).__name__ == 'Saque':
-                saldoRetorno =  saldoRetorno - each.getValor()
+                saldoRetorno =  saldoRetorno - each.getVal()
             if type(each).__name__ == 'Transferencia':
-                saldoRetorno =  saldoRetorno - each.getValor()
+                saldoRetorno =  saldoRetorno - each.getVal()
         return saldoRetorno
             
 class Transacao(ABC):
@@ -351,7 +351,7 @@ class Transacao(ABC):
         self.__valor = valor
         self.__data = data
 
-    def getValor(self):
+    def getVal(self):
         return self.__valor
 
     def getData(self):

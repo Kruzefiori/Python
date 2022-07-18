@@ -1,6 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import simpledialog
+import os.path
+import pickle
+
+class NotFounded(Exception):
+    pass
+
+class EmptyField(Exception):
+    pass
 
 class Produto():
     def __init__(self, cod=int, desc=str, valor=float):
@@ -19,6 +27,7 @@ class Produto():
     
 class LimiteInsereProduto(tk.Toplevel):
     def __init__(self, controle):
+
         tk.Toplevel.__init__(self)
         self.geometry('400x250')
         self.title('Produto')
@@ -61,15 +70,27 @@ class LimiteInsereProduto(tk.Toplevel):
 
 class ControleProduto():
     def __init__(self):
-        self.listaProd = []
+        if not os.path.isfile('produto.pickle'):
+            self.listaProd = []
+        else:
+            with open('produto.pickle', "rb") as f:
+                self.listaProd = pickle.load(f)
                     
+    
+    def salvaProdutos(self):
+        if len(self.listaProd) != 0:
+            with open("produto.pickle", "wb") as f:
+                pickle.dump(self.listaProd, f)
+
     def cadastraProd(self):
         self.limiteCad = LimiteInsereProduto(self)
         
     def getNomeProd(self):
         self.listaNomes = []
+
         for each in self.listaProd:
             self.listaNomes.append(each.getDescr())
+        
         return self.listaNomes
 
     def getListaProd(self):
@@ -77,35 +98,47 @@ class ControleProduto():
         
     def getCodigos(self):
         self.listaCodigos = []
+
         for each in self.listaProd:
             self.listaCodigos.append(each.getCod())
+        
         return self.listaCodigos
     
     def consultaProd(self):
-        produto = simpledialog.askstring('Código', 'Digite o código do produto: ')
-        if produto not in self.getCodigos():
-            messagebox.showinfo('Erro' , 'Produto não encontrado')
-        else:
-            for each in self.listaProd:
+        try:
+            produto = simpledialog.askstring('Código', 'Digite o código do produto: ')
+            if produto not in self.getCodigos():
+                raise NotFounded
+            else:
+                for each in self.listaProd:
                     if each.getCod() == produto:
                         messagebox.showinfo(each.getDescr(), "Descrição: " + each.getDescr() + "\nCodigo: " + each.getCod() + "\nValor: R$" + each.getVal() + ",00")
 
+        except NotFounded:
+            messagebox.showerror('Não encontrado', 'O código não está associado a nenhum produto')
+
     def enterHandler(self, event):
-            cod = self.limiteCad.inputCodigo.get()
-            desc = self.limiteCad.inputDesc.get()
-            valor = self.limiteCad.inputValor.get()
-            if cod == '' or desc == '' or valor == '':
-                messagebox.showwarning("ERRO!", "Todos os campos devem ser preenchidos!")
-            else:
-                produto = Produto(cod, desc, valor)
-                self.listaProd.append(produto)
-                messagebox.showinfo("Sucesso!", "O produto foi cadastrado!")
-                self.clearHandler(event)
+            try:
+                cod = self.limiteCad.inputCodigo.get()
+                desc = self.limiteCad.inputDesc.get()
+                valor = self.limiteCad.inputValor.get()
+
+                if cod == None or desc == None or valor == None:
+                    raise EmptyField
+                else:
+                    produto = Produto(cod, desc, valor)
+                    self.listaProd.append(produto)
+                    messagebox.showinfo("Feito!", "O produto foi cadastrado!")
+                    self.clearHandler(event)
             
+            except EmptyField:
+                messagebox.showwarning("Vazio!", "Todos os campos devem ser preenchidos!")
+    
     def clearHandler(self, event):
         self.limiteCad.inputCodigo.delete(0, len(self.limiteCad.inputCodigo.get()))
         self.limiteCad.inputDesc.delete(0, len(self.limiteCad.inputDesc.get()))
         self.limiteCad.inputValor.delete(0, len(self.limiteCad.inputValor.get()))
+
 
     def fechaHandler(self, event):
          self.limiteCad.destroy()
