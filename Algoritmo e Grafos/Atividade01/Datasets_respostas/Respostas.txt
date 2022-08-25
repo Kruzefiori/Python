@@ -1,0 +1,9 @@
+exemplo 7 7
+zachary 34 34
+zachary 34 34
+zachary 34 34
+exemplo 7 7
+exemplo 7 7
+exemplo 7 7
+zachary 34 34
+ponte 4 4
