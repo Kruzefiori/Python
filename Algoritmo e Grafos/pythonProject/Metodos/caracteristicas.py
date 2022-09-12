@@ -31,7 +31,7 @@ def tipoGrafo(matriz):
     tup_tam = leitura_matriz(matriz)
     for i in range(tup_tam[0]):
         for j in range(tup_tam[1]):
-            if matriz[i][j] == 0:
+            if matriz[i][i] == 0:
                 simples = True
             elif matriz[i][j] == 1 and matriz[j][i] == 0:
                 digrafo = True
@@ -56,7 +56,7 @@ def calcDensidade(matriz):
         for i in range(tup_tam[0]):
             for j in range(tup_tam[1]):
                 arestas += matriz[i][j]
-    return arestas/(tup_tam[0]*tup_tam[1])
+    return 2*arestas/(tup_tam[0]*tup_tam[1]*(tup_tam[1]+tup_tam[0]-1))
 
 def insereAresta(matriz, vi, vj):
     if tipoGrafo == 0:
